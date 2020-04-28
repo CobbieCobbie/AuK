@@ -123,8 +123,43 @@
 		\end{itemize}
 	\end{proof} 
 \end{enumerate}
-
+\newpage
 \begin{aufgabe}
 \end{aufgabe}
 
+\begin{enumerate}
+	\item 
+	\item Consider the drawing of the following graph:
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.8\textwidth}
+			\centering
+			\includegraphics{22.pdf}
+			\caption*{$\Gamma_G$}
+		\end{subfigure}
+	\end{figure}
+	Here, the PQ will look as follows:
+	\begin{quotation}
+		\texttt{PQ = [(A,0),(C,$\infty$),(B,$\infty$)]}
+	\end{quotation}
+\texttt{Extract\_Min} returns and deletes \texttt{(A,0)}. Its neighbours will get updated to $PQ'$:
+\begin{quotation}
+	\texttt{PQ' = [(C,1),(B,2)]}
+\end{quotation}
+Next, $C$ will extracted since it is the minimum. But no edge from $C$ is left out of $PQ'$. The result will be:
+\begin{align*}
+	d[A] &= 0\\
+	d[B] &= 2\\
+	d[C] &= 1 \neq 0
+\end{align*}
+Therefore not the correct answer.
+\end{enumerate}
+
+\newpage
+\begin{aufgabe}
+\end{aufgabe}
+
+\newpage
+\begin{aufgabe}
+\end{aufgabe}
 \end{document}
