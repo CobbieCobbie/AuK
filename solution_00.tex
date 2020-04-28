@@ -18,6 +18,7 @@
 %\usepackage[bookmarksnumbered,pdftitle={\titleDocument},hyperfootnotes=false]{hyperref} 
 \usepackage{color}
 \usepackage{float}
+\usepackage{enumerate}
 
 %test
 %\usepackage[backend=bibtex]{biblatex}
@@ -86,6 +87,42 @@
 \displaywidowpenalty = 10000
 
 \begin{document}
+
+\begin{aufgabe}
+\end{aufgabe}
+
+\begin{enumerate}[a)]
+	\item The runtime of the Algorithm 1 for the shortest path problem equals $\mathcal{O}(n\cdot m)$, where $n$ equals the size of vertices and $m$ equals the size of edges.
+	\begin{proof}
+		The initialization of the lengths runs in $\mathcal{O}(n)$. For the worst case scenario, for every length update a new shorter path will be revealed, until every vertex is finally evaluated $()\mathcal{O}(n))$. To find the newly revealed shortest path, it takes $\mathcal{O}(m)$ comparisons. Hence, the algorithm will run in $\mathcal{O}(n\cdot m)$ in the worst case and in $\mathcal{O}(\max\{n,m\})$ in best case.
+	\end{proof}
+	\item $A <_{\text{aymp}} B<_{\text{aymp}} E <_{\text{aymp}} C <_{\text{aymp}} D$
+	\begin{proof}
+		\begin{itemize}
+			\item $A <_{\text{aymp}} B$
+			\begin{align*}
+				 2^{\sqrt{\log n}} = {2^{\log n}}^{\frac{1}{2}} = {2^{\frac{1}{2}}}^{\log n} = \sqrt{2}^{\log n}
+			\end{align*}
+			Also, the following holds. Let $f$ be a monotone increasing function and $c > 1$. Then:
+			\begin{align*}
+				\lim\limits_{\infty}\frac{c^f}{f} > 1
+			\end{align*}
+			\item $B <_{\text{aymp}} E$
+			\begin{align*}
+				2^{\sqrt{\log n}} < 2^{\sqrt{\log n \cdot \log n}} = n < 28n
+			\end{align*}
+			\item $E <_{\text{aymp}} C$
+			\begin{align*}
+				\log n^{\log n} = (2^{\log \log n})^{\log n}= n^{\log \log n}
+			\end{align*}
+			Therefore, every linear function out of $\mathcal{O}(n)$ will be outgrown by $C$.
+			\item $C <_{\text{aymp}} D$
+			\begin{align*}
+				\mathcal{O}(2^{\log \log n}) \subset \mathcal{O}(2^n1)
+			\end{align*}
+		\end{itemize}
+	\end{proof} 
+\end{enumerate}
 
 \begin{aufgabe}
 \end{aufgabe}
