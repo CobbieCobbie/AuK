@@ -4,7 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{caption,subcaption}
-\usepackage[ngerman]{babel}
+\usepackage[british]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
 \usepackage{proof}
@@ -92,9 +92,9 @@
 \end{aufgabe}
 
 \begin{enumerate}[a)]
-	\item The runtime of the Algorithm 1 for the shortest path problem equals $\mathcal{O}(n\cdot m)$, where $n$ equals the size of vertices and $m$ equals the size of edges.
+	\item The runtime of the Algorithm 1 for the shortest path problem equals $\mathcal{O}(n\cdot m)$, where $n$ equals the number of vertices and $m$ equals the number of edges.
 	\begin{proof}
-		The initialization of the lengths runs in $\mathcal{O}(n)$. For the worst case scenario, for every length update a new shorter path will be revealed, until every vertex is finally evaluated $()\mathcal{O}(n))$. To find the newly revealed shortest path, it takes $\mathcal{O}(m)$ comparisons. Hence, the algorithm will run in $\mathcal{O}(n\cdot m)$ in the worst case and in $\mathcal{O}(\max\{n,m\})$ in best case.
+		The initialization of the lengths runs in $\mathcal{O}(n)$. For the worst case scenario, for every length update a new shorter path will be revealed, until every vertex is finally evaluated ($\mathcal{O}(n)$). To find the newly revealed shortest path, it takes $\mathcal{O}(m)$ comparisons. Hence, the algorithm will run in $\mathcal{O}(n\cdot m)$ in the worst case and in $\mathcal{O}(\max\{n,m\})$ in best case.
 	\end{proof}
 	\item $A <_{\text{aymp}} B<_{\text{aymp}} E <_{\text{aymp}} C <_{\text{aymp}} D$
 	\begin{proof}
