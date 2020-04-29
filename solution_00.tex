@@ -162,4 +162,12 @@ Therefore not the correct answer.
 \newpage
 \begin{aufgabe}
 \end{aufgabe}
+
+\begin{enumerate}[a)]
+	\item The height of a Fibonacci heap is in $\mathcal{O}(n)$ in the worst case.
+	\begin{proof}
+		Consider a chain of increasing elements $L$. Then, The first element can be interpreted as a root list with one element which has one child. This child has only one child and so on. Every element points to itself in a linked list. Therefore, $L$ can be interpreted as a valid Fibonacci Heap where the height is in $\mathcal{O}(|L|)$.
+	\end{proof}
+\end{enumerate}
+
 \end{document}
