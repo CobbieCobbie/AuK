@@ -91,7 +91,23 @@
 
 \begin{aufgabe}
 \end{aufgabe}
-
+\begin{enumerate}
+	\item The \textit{neighbourhood} $N(S)$ of a set of vertices $S$ is a set of vertices, attached to any vertex $s\in S$. For a bipartite graph $G = (V_1 \cup V_2, E)$, the sets of vertices respect the property of bipartition when talking about Hall's Condition:
+	\begin{align*}
+	|N(S)| \geq |S| ~~~ S\subseteq V
+	\end{align*}
+	The following statement is to prove:
+	\begin{align*}
+	|N(S)| \geq |S| \forall (S\subseteq V_1 \vee S\subseteq V_2) \Leftrightarrow~G \text{ is perfectly matchable}
+	\end{align*}
+	\begin{proof}Since this is an equivalency, we have to argue for both directions of implication.
+		\begin{itemize}
+			\item[$\Rightarrow$] Hall's Condition holds for any subset of $V_1$ or $V_2$. Then, $|V_1| = |V_2|$. Otherwise, it would violate Hall's Condition since $N(V_1) = V_2$ and vice versa.\\
+			Suppose, that there was a maximal but no perfect matching for $G$. Then, there is at least one unmatched vertex in $V_1$ and in $V_2$, since $|V_1| = |V_2|$. Suppose, this unmatched vertex $v$ is of degree 0 but then, Hall's Condition is violated since it has no neighbours. Every neighbour of $v$ is matched since the matching was maximal and $v$ is unmatched. Consider the alternating path starting from $v$ and since the matching was maximal, this path can not be augmented.  Let $S_1 \subseteq V_1, S_2\subseteq V_2$ be the vertices lying on the alternating paths. Then, $|S_1 - S_2| = 1$ since $v$ lies in either $V_1$ or $V_2$ and the rest is matched. Let without loss of generality $v\in V_1$, $S_2$ be the smaller set. Then $N(S_1) \subseteq S_2 < S_1$, contradicting Hall's Condition.
+			\item[$\Leftarrow$] Let $M$ be a perfect matching for $G$. Consider any subset $S$ of $V_1$ or $V_2$. Then, the amount of neighbours of $S$ is at least as large as $S$ since there is a perfect matching, a match for every vertex of $S$.
+		\end{itemize}
+	\end{proof}
+\end{enumerate}
 \newpage
 \begin{aufgabe}
 \end{aufgabe}
