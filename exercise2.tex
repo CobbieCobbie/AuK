@@ -107,6 +107,20 @@
 			\item[$\Leftarrow$] Let $M$ be a perfect matching for $G$. Consider any subset $S$ of $V_1$ or $V_2$. Then, the amount of neighbours of $S$ is at least as large as $S$ since there is a perfect matching, a match for every vertex of $S$.
 		\end{itemize}
 	\end{proof}
+	\item For a bipartite graph $G = (V \cup W,E)$, the following holds:
+	\begin{align}
+		d(v) \geq 1 \wedge d(v) \geq d(w) \forall v\in V, w\in W, (u,w) \in E\label{eq:1}
+	\end{align}
+	Then, there exists a matching covering all vertices of $V$.
+	\begin{proof}
+		Let $|V| = n$. The size of $W$ depends on \ref{eq:1}. 
+		\begin{align*}
+		
+		\end{align*}
+		% Argue with the size of $W$ that you are able to remove vertices out of $W$ until Halls Condition is met - then, there will be a perfect matching and the statement is correct.
+		% alternatively, write an algorithm and prove its correctness
+	
+	\end{proof}
 \end{enumerate}
 \newpage
 \begin{aufgabe}
