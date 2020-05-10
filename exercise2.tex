@@ -130,9 +130,9 @@ To find a maximum set $\mathcal P_1$ of vertex-disjoint paths of length 1, we ca
 \KwResult{Find a maximum set of vertex-disjoint paths of length 1 in $G$}
 $\mathcal P_1=\emptyset$\;
 \While{$E\ne\emptyset$}{
-    $(u,v)\in E$\;
-    $\mathcal P_1 = \mathcal P_1 \cup (u,v)$\;
-    remove all edges adjacent to $u$ or $v$ from $E$\;
+ $(u,v)\in E$\;
+ $\mathcal P_1 = \mathcal P_1 \cup (u,v)$\;
+ remove all edges adjacent to $u$ or $v$ from $E$\;
 }
 \caption{Find $\mathcal P_1$}
 \end{algorithm}
@@ -140,24 +140,33 @@ $\mathcal P_1=\emptyset$\;
 For each iteration of the while loop, either a edge that is in $M^*$, or a edge out side of $M^*$ will be picked.
 We will now look at these two cases:
 \begin{enumerate}
-    \item If $(u,v)$ is in $M^*$, then $|\mathcal P_1|$ is increased by 1.
-        The edges that are removed from $E$ are $(u,v)$ plus a number of other edges which cannot be in $M^*$, since $(u,v)$ is in $M^*$.
-        If, for all iterations of the while loop, we pick edges that are in $M^*$, we therefore get $|\mathcal P_1|=|M^*|$.
-    \item If $(u,v)$ is not in $M^*$, then we also increase $|\mathcal P_1|$ by one, but since $(u,v)$ is not in $M^*$, do remove 1 or 2 edges that are in $M^*$ (since either $u$ or $v$ could be free).
-        In the second case we remove matched edge more than we add to $\mathcal P_1$ and therefore $|\mathcal P_1|\ge \frac 12 |M^*|$.
+ \item If $(u,v)$ is in $M^*$, then $|\mathcal P_1|$ is increased by 1.
+     The edges that are removed from $E$ are $(u,v)$ plus a number of other edges which cannot be in $M^*$, since $(u,v)$ is in $M^*$.
+     If, for all iterations of the while loop, we pick edges that are in $M^*$, we therefore get $|\mathcal P_1|=|M^*|$.
+ \item If $(u,v)$ is not in $M^*$, then we also increase $|\mathcal P_1|$ by one, but since $(u,v)$ is not in $M^*$, do remove 1 or 2 edges that are in $M^*$ (since either $u$ or $v$ could be free).
+     In the second case we remove matched edge more than we add to $\mathcal P_1$ and therefore $|\mathcal P_1|\ge \frac 12 |M^*|$.
 \end{enumerate}
 For both cases, $|\mathcal P_1|\ge \frac 12 |M^*|$ holds.
 
-Since $|M_i|=|M_{i-2}|+|\mathcal P_i|$ we can show that $|M_i|\ge\frac{i}{i+1}|M^*|$ holds for $i>1$ if
-\[ |\mathcal P_i|\ge\frac{i}{i+1}|M^*|-\frac{i-2}{i-2+1}|M^*|=\frac{2}{i^2-1}|M^*| \]
+% Since $|M_i|=|M_{i-2}|+|\mathcal P_i|$ we can show that $|M_i|\ge\frac{i}{i+1}|M^*|$ holds for $i>1$ if
+% \[ |\mathcal P_i|\ge\frac{i}{i+1}|M^*|-\frac{i-2}{i-2+1}|M^*|=\frac{2}{i^2-1}|M^*| \]
 
-To find a maximal, vertex-disjoint set $\mathcal P_i$ on $G$ with respect to $M_i$, each time we find a path $p$, which belongs to $\mathcal P_i$, we remove all vertices along $p$ and their adjacent edges from $G$ to form a reduced graph $G'$.
-We then continue to find another path in this reduced graph and repeat the above step.
-This ensures that the found paths are vertex-disjoint.
+% To find a maximal, vertex-disjoint set $\mathcal P_i$ on $G$ with respect to $M_i$, each time we find a path $p$, which belongs to $\mathcal P_i$, we remove all vertices along $p$ and their adjacent edges from $G$ to form a reduced graph $G'$.
+% We then continue to find another path in this reduced graph and repeat the above step.
+% This ensures that the found paths are vertex-disjoint.
 
-For each path $p$ with length $i$ which we therefore cut a segment from $G$ which contains $i+1$ vertices.
-Within these cut vertices, between 0 and $\frac{i+1}{2}$ can be free with respect to $M^*$.
-This means that for each path $p$ we find, we remove between $i+2$ and $\frac{i+2}{2}$ edges from $G$, which are in $M^*$.
+% For each path $p$ with length $i$ which we therefore cut a segment from $G$ which contains $i+1$ vertices.
+% Within these cut vertices, between 0 and $\frac{i+1}{2}$ can be free with respect to $M^*$.
+% This means that for each path $p$ we find, we remove between $i+2$ and $\frac{i+2}{2}$ edges from $G$, which are in $M^*$.
+
+For $i>1$ we prove by induction for the step from $i$ to $i+2$.
+The induction hypothesis is that $|M_k|\ge \frac{k}{k+1}|M^*|$ is true for $1<k\le i$.
+There are two possible cases:
+\begin{enumerate}
+    \item If $|M_{i}\ge \frac{i+2}{i+3}|M^*|$, then $|M_{i+2}|\ge \frac{i+2}{i+3}|M^*|$ is obviously true.
+    \item If $|M_{i}|< \frac{i+2}{i+3}|M^*|$, then the following needs to be true: $|\mathcal P_i|\ge \frac{i+2}{i+3}|M^*|-|M_{i}|$.
+        From corollary 2 in the first lecture on matchings, we know that in this case, there exists an augmenting path in $G$ with respect to $M_{i}$ of length $\le 2\left\lfloor\frac{|M_{i}|}{|M^*|-|M_{i}|}\right\rfloor+1=2i+1$.
+\end{enumerate}
 
 \newpage
 \begin{aufgabe}
@@ -304,7 +313,20 @@ This means that for each path $p$ we find, we remove between $i+2$ and $\frac{i+
 \end{aufgabe}
 
 \begin{enumerate}[a)]
+<<<<<<< HEAD
 	\item
+=======
+	\item The following is to proof:
+	\begin{quotation}
+	$(i,j)$ is an imperfect edge $\Leftrightarrow$ The residual graph after deleting vertices $i,j$ does not have a perfect matching.\end{quotation}
+	\begin{proof}
+	  \begin{itemize}
+	      \item[$\Rightarrow$] Every possible perfect matching must involve vertices $i$ and $j$ with its edges to other neighbours except $(i,j)$, since it is an imperfect edge. Deleting $i,j$ from the graph will also delete the edges adjacent to $i$ and $j$, having to rematch their matching vertices. The resulting matching cannot be perfect, otherwise $(i,j)$ was not an imperfect edge after all, contradicting the premise.
+	      \item[$\Leftarrow$] Let $G$ be a graph with even number of vertices. If removing two vertices will result in a residual graph $G'$ without any perfect matching, then it might be possible that $G$ would have a perfect matching but no perfect matching of $G$ will inherit $(i,j)$ otherwise, removing $(i,j)$ from this matching would result in a perfect matching for $G'$, contradicting the premise.
+	  \end{itemize}
+	\end{proof}
+	
+>>>>>>> d2e1faf2e328ee19462d51471db37320b7456850
 	\item As already mentioned in the notes, we are able to find a perfect matching in $\mathcal{O}(n^{2.5})$. Let $G' = (G,M)$ be the graph for a given graph and a given matching $M$. $G'$ contains of all vertices and all the edges which are \underline{not} part of the matching. If there is a cycle $C$ in $G'$, then $M' = M \triangle E_C$ is still a perfect matching. The symmetric difference removes the already matched edges in $M$ und adds the remaining edges of $C$, think of alternating paths. The polytime algorithm works as follows:
 	\begin{enumerate}[1.]
 		\item Result = $E$
@@ -314,8 +336,12 @@ This means that for each path $p$ we find, we remove between $i+2$ and $\frac{i+
 		\item $M' = M\triangle E_C$ for a cycle $C$
 		\item $G' = (G',M')$ (alter the graph)
 	\end{enumerate}
+<<<<<<< HEAD
 	The remaining edges in Result were never part of a perfect matching, therefore imperfect.
 	
+=======
+	The remaining edges in Result were never part of a perfect matching, therefore imperfect. The whole algorithm runs in $\mathcal{O}(n+m+n^{2.5})$. 
+>>>>>>> d2e1faf2e328ee19462d51471db37320b7456850
 \end{enumerate}
 
 \end{document}
