@@ -113,10 +113,7 @@
 	\end{align}
 	Then, there exists a matching covering all vertices of $V$.
 	\begin{proof}
-		Let $|V| = n$. The size of $W$ depends on \ref{eq:1}. 
-		\begin{align*}
-		
-		\end{align*}
+		Let $|V| = n$. The size of $W$ depends on statement \ref{eq:1}. 
 		% Argue with the size of $W$ that you are able to remove vertices out of $W$ until Halls Condition is met - then, there will be a perfect matching and the statement is correct.
 		% alternatively, write an algorithm and prove its correctness
 	
@@ -127,15 +124,41 @@
 \end{aufgabe}
 
 It is obvious that for $|M_i|\ge \frac{i}{i+1}|M^*|$ to hold for $i=1$, $|\mathcal P_1|\ge \frac 12 |M^*|$ needs to be true.
-When starting to find the maximum set $\mathcal P_1$, there are two cases.
-Either we start by adding an edge, which is in a maximum matching to $\mathcal P_1$ or we start by adding an edge which is not in such a maximum matching.
-We will now look at these two cases.
+To find a maximum set $\mathcal P_1$ of vertex-disjoint paths of length 1, we can use the following algorithm.
 
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwResult{Find a maximum set of vertex-disjoint paths of length 1 in $G$}
+$\mathcal P_1=\emptyset$\;
+\While{$E\ne\emptyset$}{
+    $(u,v)\in E$\;
+    $\mathcal P_1 = \mathcal P_1 \cup (u,v)$\;
+    remove all edges adjacent to $u$ or $v$ from $E$\;
+}
+\caption{Find $\mathcal P_1$}
+\end{algorithm}
+
+For each iteration of the while loop, either a edge that is in $M^*$, or a edge out side of $M^*$ will be picked.
+We will now look at these two cases:
 \begin{enumerate}
-    \item If the first edge we pick is in a maximum matching, then the maximum set of augmenting paths of length 1 is $M^*$ or another set of the same cardinality and therefore $|P_1|\ge \frac 12|M^*|$.
-        Since in this case $|M_1|=|M^*|$, $|M_i|\ge \frac{i}{i+1}|M^*|$ is true for all $i$.
-    \item 
+    \item If $(u,v)$ is in $M^*$, then $|\mathcal P_1|$ is increased by 1.
+        The edges that are removed from $E$ are $(u,v)$ plus a number of other edges which cannot be in $M^*$, since $(u,v)$ is in $M^*$.
+        If, for all iterations of the while loop, we pick edges that are in $M^*$, we therefore get $|\mathcal P_1|=|M^*|$.
+    \item If $(u,v)$ is not in $M^*$, then we also increase $|\mathcal P_1|$ by one, but since $(u,v)$ is not in $M^*$, do remove 1 or 2 edges that are in $M^*$ (since either $u$ or $v$ could be free).
+        In the second case we remove matched edge more than we add to $\mathcal P_1$ and therefore $|\mathcal P_1|\ge \frac 12 |M^*|$.
 \end{enumerate}
+For both cases, $|\mathcal P_1|\ge \frac 12 |M^*|$ holds.
+
+Since $|M_i|=|M_{i-2}|+|\mathcal P_i|$ we can show that $|M_i|\ge\frac{i}{i+1}|M^*|$ holds for $i>1$ if
+\[ |\mathcal P_i|\ge\frac{i}{i+1}|M^*|-\frac{i-2}{i-2+1}|M^*|=\frac{2}{i^2-1}|M^*| \]
+
+To find a maximal, vertex-disjoint set $\mathcal P_i$ on $G$ with respect to $M_i$, each time we find a path $p$, which belongs to $\mathcal P_i$, we remove all vertices along $p$ and their adjacent edges from $G$ to form a reduced graph $G'$.
+We then continue to find another path in this reduced graph and repeat the above step.
+This ensures that the found paths are vertex-disjoint.
+
+For each path $p$ with length $i$ which we therefore cut a segment from $G$ which contains $i+1$ vertices.
+Within these cut vertices, between 0 and $\frac{i+1}{2}$ can be free with respect to $M^*$.
+This means that for each path $p$ we find, we remove between $i+2$ and $\frac{i+2}{2}$ edges from $G$, which are in $M^*$.
 
 \newpage
 \begin{aufgabe}
