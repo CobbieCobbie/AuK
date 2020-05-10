@@ -305,7 +305,17 @@ This means that for each path $p$ we find, we remove between $i+2$ and $\frac{i+
 
 \begin{enumerate}[a)]
 	\item
-	\item 
+	\item As already mentioned in the notes, we are able to find a perfect matching in $\mathcal{O}(n^{2.5})$. Let $G' = (G,M)$ be the graph for a given graph and a given matching $M$. $G'$ contains of all vertices and all the edges which are \underline{not} part of the matching. If there is a cycle $C$ in $G'$, then $M' = M \triangle E_C$ is still a perfect matching. The symmetric difference removes the already matched edges in $M$ und adds the remaining edges of $C$, think of alternating paths. The polytime algorithm works as follows:
+	\begin{enumerate}[1.]
+		\item Result = $E$
+		\item Calculate a perfect matching in $\mathcal{O}(n^{2.5})$
+		\item $G' = (G,M)$
+		\item Calculate cycles in $G'$ and save the edges in $\mathcal{O}(n+m)$
+		\item $M' = M\triangle E_C$ for a cycle $C$
+		\item $G' = (G',M')$ (alter the graph)
+	\end{enumerate}
+	The remaining edges in Result were never part of a perfect matching, therefore imperfect.
+	
 \end{enumerate}
 
 \end{document}
