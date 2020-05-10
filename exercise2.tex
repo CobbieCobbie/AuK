@@ -113,9 +113,8 @@
 	\end{align}
 	Then, there exists a matching covering all vertices of $V$.
 	\begin{proof}
-		Let $|V| = n$. The size of $W$ depends on statement \ref{eq:1}. 
-		% Argue with the size of $W$ that you are able to remove vertices out of $W$ until Halls Condition is met - then, there will be a perfect matching and the statement is correct.
-		% alternatively, write an algorithm and prove its correctness
+		Suppose that $|W| < |V|$. Then, since every vertex from $V$ has at least an edge to $W$, one vertex of $W$ must violate statement \ref{eq:1}. So, as a consequence, $|W| \geq |V|$. Let $v\in V$. Look at $N(v),N(v) \subset W$. In fact, $|N(V_i)| \geq |V_i|~ \forall V_i \subseteq V$ for the same reason as $|W| \geq|V|$.\\
+		Match $v$ with the neighbour of the lowest degree and eradicate $v$ and $w$ along with all adjacent edges. Then, $|N(v')| \geq 1$ and statement \ref{eq:1} still holds for the residual graph. Continue until every vertex of $V$ is matched. 
 	
 	\end{proof}
 \end{enumerate}
@@ -301,7 +300,12 @@ This means that for each path $p$ we find, we remove between $i+2$ and $\frac{i+
 \end{proof}
 
 \newpage
-\begin{aufgabe}
+\begin{aufgabe} Imperfect edges
 \end{aufgabe}
+
+\begin{enumerate}[a)]
+	\item
+	\item 
+\end{enumerate}
 
 \end{document}
