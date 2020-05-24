@@ -209,7 +209,7 @@ The following pseudocode describes this algorithm more formaly.
 \end{aufgabe}
 
 Since $G_R$ contains an edge between all tasks that are not connected by a directed path in $D$, an edge $(t_i,t_j)$ in $G_R$ represents that the two tasks $t_i$ and $t_j$ are independent and could therefore be executed in parallel.
-A matching in $G_R$ can then be understood as groupings of two tasks that will are scheduled at the same time (i.e. run in parallel on the two machines).
+A matching in $G_R$ can then be understood as groupings of two tasks that will be scheduled at the same time (i.e. run in parallel on the two machines).
 
 If we consider the maximum matching $M$, then $G_R$ tells us which tasks will run without a ``partner task'' (i.e. the free vertices with respect to $M$) and which tasks are run in parallel with what other task.
 Since $M$ is maximum, we can run no more tasks on the second machine, because of the dependencies.
