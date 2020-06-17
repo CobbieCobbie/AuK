@@ -111,6 +111,10 @@
 \newpage
 \begin{aufgabe}
 \end{aufgabe}
+The $L_1$ metrics between two points out of $\mathbb{R}^2$ is defined as:
+\begin{align*}
+d(p_i,p_j) = |x_i - x_j| + |y_i - y_j|
+\end{align*}
 \begin{enumerate}[a)]
 	\item In the following figure, the rectangles along with the points of minimum distances are illustrated:
 	\begin{figure}[H]
@@ -132,8 +136,8 @@ An optimal solution is:
 \end{align*}
 with a diameter of 1.5.
 \begin{proof}
-	The minimum distance from $r_2$ to $r_1$ or $r_2$ is 1 due to the gap. To keep the distance to $r_3$ in $y$ direction and to $r_1$ in $x$ direction minimal, $p_2$ is set to the bottom left corner. Then, with two distances of 1, there is a diameter of 2 since the point set would span a square. So, the lower bound of the diameter is 1, the upper bound 2 with this approach.\\
-	Next, it is to show that there is no point set with a lower diameter of 1.5. Suppose, there exists a point set $p'_1,p'_2, p'_3$ with fixed $p'_2 = p_2$ and a diameter of less than 1.5. Then, $d(p'_i,p_j') < 1.5$. Look at w.l.o.g. fixed $p'_2, p'_1$ such that the distance between those two is less than 1.5. Then, every point $p'_3$ fulfilling the diameter constraint is not in $r_3$, contradicting the definition.
+	The minimum distance from $r_2$ to $r_1$ or $r_2$ is 1 due to the gap. To keep the distance to $r_3$ in $y$ direction and to $r_1$ in $x$ direction minimal, $p_2$ is set to the bottom left corner. Then, with two distances of 1, there is a diameter of 2 since the point set would span a square at its corners. So, the lower bound of the diameter is 1, the upper bound 2 with this approach.\\
+	Next, it is to show that there is no point set with a lower diameter of 1.5. Suppose, there exists a point set $p'_1,p'_2, p'_3$ with fixed $p'_2 = p_2$ and a diameter of less than 1.5. Then, $d(p'_i,p_j') < 1.5$. Look at w.l.o.g. fixed $p'_2, p'_1$. Then, every point $p'_3$ fulfilling the diameter constraint is not in $r_3$, for all fixed points, contradicting the Minimum Manhattan Diameter Point Set.
 \end{proof}
 Note that this is not the only optimal solution, consider this second solution in the figure below:
 	\begin{figure}[H]
@@ -144,6 +148,7 @@ Note that this is not the only optimal solution, consider this second solution i
 		\caption*{Alternative solution}
 	\end{subfigure}
 \end{figure}
+\item 
 \end{enumerate}
 \newpage
 \begin{aufgabe}
