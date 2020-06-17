@@ -1,0 +1,279 @@
+\documentclass[a4paper,12pt,headsepline]{scrartcl}
+
+%\part{title}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption,subcaption}
+\usepackage[british]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{proof}
+\geometry{left=3.5cm, right=2cm, top=2.5cm, bottom=2cm}
+\usepackage{hyperref}
+%\usepackage[hyphens,obeyspaces,spaces]{url}
+\usepackage{fancybox}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{gensymb}
+\usepackage[linesnumbered,ruled,vlined,norelsize]{algorithm2e}
+%\usepackage[bookmarksnumbered,pdftitle={\titleDocument},hyperfootnotes=false]{hyperref} 
+\usepackage{color}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{marvosym}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+\usepgfplotslibrary{fillbetween}
+
+%test
+%\usepackage[backend=bibtex]{biblatex}
+%\usepackage{filecontents}
+
+%\addbibresource{ref.bib}
+
+\restylefloat{figure}
+
+% Makros
+%\newenvironment{sketch}{\begin{proof}[Proof (Sketch)]}{\end{proof}}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{assumption}{Assumption}
+\newtheorem{lemma}{Lemma}
+%\newtheorem{remark}{Remark}
+%\newtheorem{definition}{Definition}
+%\newtheorem{corollary}{Corollary}
+\newcommand{\comment}[1]
+{
+  \begin{quotation}
+    \textcolor{blue}{\underline{Edit:} #1}
+  \end{quotation}
+}
+\newtheorem{aufgabe}{Exercise}
+\newcommand{\Ex}[2]
+{
+	\setcounter{section}{#2}
+	\section*{Übungsblatt #2 zu #1}
+}
+\newcommand{\TODO}[1]
+{
+  \begin{quotation}
+    \textcolor{red}{\underline{TODO:} #1}
+  \end{quotation}
+}
+% Zeichen 
+\newcommand{\OO}{\ensuremath{\mathcal{O}}}
+\newcommand{\ec}{\texttt{ec}}
+\newcommand{\NP}{\call{NP}}
+\newcommand{\call}[1]{\ensuremath{\mathcal{#1}}}
+
+% neue Kopfzeilen mit fancypaket
+\usepackage{fancyhdr} %Paket laden
+\pagestyle{fancy} %eigener Seitenstil
+\fancyhf{} %alle Kopf- und Fußzeilenfelder bereinigen
+\fancyhead[L]{Benjamin \c Coban \\ Christoph Jabs}
+\fancyhead[C]{Algorithmen und Komplexität \\ Blatt 6}
+\fancyhead[R]{3526251 \\ 5567177}
+\setlength{\headheight}{39pt}
+\renewcommand{\headrulewidth}{0.4pt} %obere Trennlinie
+%\fancyfoot[C]{\thepage} %Seitennummer
+%\renewcommand{\footrulewidth}{0.4pt} %untere Trennlinie
+
+\frenchspacing
+\makeindex
+
+% Pseudocode für Java
+\usepackage{listings}
+\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt, keywordstyle=\color{black}\bfseries, stringstyle=\ttfamily,showstringspaces=false,basicstyle=\footnotesize,captionpos=b}
+\lstset{language=java}
+
+% Disable single lines at the start of a paragraph (Schusterjungen)
+\clubpenalty = 10000
+% Disable single lines at the end of a paragraph (Hurenkinder)
+\begin{document}
+\widowpenalty = 10000
+\displaywidowpenalty = 10000
+\begin{aufgabe}
+\end{aufgabe}
+\begin{enumerate}[a)]
+    \item The dual problem:
+    \begin{align*}
+        \textbf{\text{minimize}} & &-6&y_1 + 4y_2 &&\\
+        \textbf{\text{s.t.}} & &-2&y_1 + y_2   &\geq &-6\\
+        & &10&y_1 - 7y_2 &\geq &32\\
+        & &-3&y_1 + 2y_2 &\geq &-9\\
+        &&&y_i &\geq &0
+    \end{align*}
+    \item In the given dictionary, the basic variables are $x_1,x_3$ and the non-basic variables are $x_2,z_1,z_2$
+    \item The basic solution of the given dictionary is achieved by setting all non-basic variables to zero, resulting in:
+    \begin{align*}
+        x_1' =x_2'= 0, x_3' = 2, w = -18
+    \end{align*}
+    This dictionary is degenerate since there is no constant $b$ in the line of $x_1$.
+    \item The dual solution for the given primal dictionary are the negative coefficients of the $w$ equality. Therefore, $y_1' = 3, y_2' = 0$. Since $10\cdot 3 < 32 $ with usage of $y_i'$ in the second line, the dual solution is not feasible.
+    \item Since $y'_i$ is not feasible in the dual case, the complementary slackness theorem is not satisfied and ...
+    \item ...the primal solution not optimal.
+    \item The entering variable according to the largest coefficient is $x_2$ and $x_1$ as leaving variable, with the smallest constant value $b_1 = 0$.
+    \begin{align*}
+        &x_1 = 2z_1 - x_2 + 3z_2\\
+        \Longleftrightarrow &= x_2 = 2z_1 -b x_1 + 3z_2
+    \end{align*}
+    This is a degenerate pivot, because the value of $x_2$ does not change.
+\end{enumerate}
+\newpage
+
+\begin{aufgabe}
+\end{aufgabe}
+\begin{enumerate}[a)]
+  \item
+    \begin{enumerate}[1.]
+      \item Check feasibility of $x$:
+        \begin{align*}
+          4\cdot 1 &= 4 &\checkmark \\
+          3\cdot 2 + 2\cdot 3 + 4 &< 15 &\checkmark \\
+          2\cdot 1 - 3\cdot 3 &= -7 &\checkmark \\
+          1 + 5\cdot 3 - 9\cdot 4 &= -20 &\checkmark
+        \end{align*}
+      \item Solve equation system from [CS1]
+        \begin{align}
+          y_2 &= 0 \label{eq:2a1}\\
+          4y_1 + 3y_2 + 2y_3 + y_4 &= 14 \label{eq:2a2}\\
+          2y_2 - 3y_3 + 5y_4 &= 4 \label{eq:2a3}\\
+          y_2 - 9y_4 &= 18 \label{eq:2a4}
+        \end{align}
+        \eqref{eq:2a1} in \eqref{eq:2a4}:
+        \begin{equation}\label{eq:2a5}
+          \rightarrow\quad y_4=2
+        \end{equation}
+        \eqref{eq:2a1} and \eqref{eq:2a5} in \eqref{eq:2a3}:
+        \begin{equation}\label{eq:2a6}
+          \rightarrow\quad y_3=2
+        \end{equation}
+        \eqref{eq:2a1} and \eqref{eq:2a5} and \eqref{eq:2a6} in \eqref{eq:2a2}:
+        \begin{equation}
+          \rightarrow\quad y_1=2
+        \end{equation}
+        \[ y^{*T} = (2,0,2,2) \]
+      \item Check feasibility of $y^*$: We only look at constraints 2 and 5 of the dual, since the others were already in [CS1]
+        \begin{align*}
+          5\cdot 2 + 1\cdot 0 - 2\cdot 2 + 8\cdot 2 &= 22 &\checkmark \\
+          -6\cdot 2 + 3\cdot 0 + 7\cdot 2 + 4\cdot 2 &< 11 &\text{\Lightning}
+        \end{align*}
+    \end{enumerate}
+    Since $y^*$ is not feasible, $x$ is not an optimal solution.
+  \item
+    \begin{enumerate}[1.]
+      \item Check feasibility of $x$:
+        \begin{align*}
+          4\cdot 2 &= 8 &\checkmark \\
+          3\cdot 2 + 1 &< 9 &\checkmark \\
+          2 + 2\cdot 1 &= 4 &\checkmark
+        \end{align*}
+      \item Solve equation system from [CS1]
+        \begin{align}
+          y_2 &= 0 \label{eq:2b1}\\
+          4y_1 + 3y_2 + y_3 &= 9 \label{eq:2b2}\\
+          y_2 - 2y_3 &= 2 \label{eq:2b3}
+        \end{align}
+        \eqref{eq:2b1} in \eqref{eq:2b3}:
+        \begin{equation}\label{eq:2b4}
+          \rightarrow\quad y_3=1
+        \end{equation}
+        \eqref{eq:2b1} and \eqref{eq:2b4} in \eqref{eq:2b2}:
+        \begin{equation}
+          \rightarrow\quad y_1=2
+        \end{equation}
+        \[ y^{*T} = (2,0,1) \]
+      \item Check feasibility of $y^*$: We only look at constraint 3 of the dual, since the others were already in [CS1]
+        \begin{align*}
+          1\cdot 2 + 2\cdot 0 + 3\cdot 1 &= 4 &\checkmark
+        \end{align*}
+    \end{enumerate}
+    Since $y^*$ is feasible, $x$ is an optimal solution.
+\end{enumerate}
+\newpage
+
+\begin{aufgabe}
+\end{aufgabe}
+This answer is based on a presentation on the Max-Flow-Min-Cut-Theorem by Orgad Keller\footnote{\url{http://u.cs.biu.ac.il/~rosenfa5/Alg2/LP.ppt}} where a concrete example with numeric values is given.
+\begin{enumerate}[a)]
+  \item\label{sec:3a}To represent the linear program in matrix form, we start by defining a vector $x$ that contains the flow through all possible arcs in the network:
+    \[ x = (x_{1,1},\dots,x_{1,n},\dots,x_{n,1},\dots,x_{n,n})^T \]
+    We define a similar vector for the capacity constraints:
+    \[ c = (c(1,1),\dots,c(1,n),\dots,c(n,1),\dots,c(n,n))^T \]
+    It shall be noted that arcs that do not exist could either be removed from both of these vectors, or their capacity can be set to 0.
+    To provide a general description, we assume that the capacity for non-existant arcs is set to 0.
+    
+    We now want to define the constraints of the LP as $Ax\le b$.
+    Therefore we start defining $A$ and $b$ now:
+    To translate the capacity constraints, the first part of $A$ ist an identity matrix of size $n^2\times n^2$.
+    This must be smaller or equal to the capacity constraint of each edge:
+    \[ Ix\le c \]
+    
+    Before translating the flow conservation constraints, to include the constrains of flow at the source and the target into the flow conservation constraints, we add an additional edge from the target to the sink.
+    To not restrict the network through this edge, we set it's capacity to $\infty$.
+    To now represent the flow conservation constraints, for each $i\in V$ we add one row to $A$ with the following entries:
+    Each entry is a zero, except: entries corresponding to $x_{i,j}:i\ne j$ are $1$ and entries corresponding to $x_{j,i}:i\ne j$ are $-1$.
+    These rows represent the difference of sums in the flow conservation constraints in the original LP.
+    There they are constrained to be $=0$.
+    Since we now want to have an LP of form $Ax\le b$, we set each of these rows to $\le 0$.
+    This is possible since we changed the network to be a closed cycle and therefore if a vertex would have more flow out of it than is flowing into it, since the network is a closed cycle, the flow will increase on the other side of the vertex and the difference will always be 0.
+
+    We now have a constraint expression of form $Ax\le b$ with A being the following:
+    \[ A=\begin{pmatrix}I\\D\end{pmatrix} \]
+    where $D$ is a matrix with the $n$ rows as described above.
+    And $b$ being of the following form:
+    \[ b=\begin{pmatrix}c\\0_n\end{pmatrix} \]
+    where $0_n$ denotes $n$ entries of value $0$.
+    
+    The last thing that needs to be reformulated is the objective function.
+    The flow into the sink and out of the target, denoted as $f$ in the original LP is now the flow through the additionally introduced arc between the target and the sink.
+    This means that the value to maximize is $x_{n,1}$, and therefore we can write the objective function as follows:
+    \[ (0_{n(n-1)},1,0_{n-1})x \]
+
+    The final LP in matrix form is therefore:
+    \begin{alignat*}{2}
+      \textbf{max.}\quad && (0_{n(n-1)},1,0_{n-1})x & \\
+      \textbf{s.t.}\quad && \begin{pmatrix}I\\D\end{pmatrix}x &\le \begin{pmatrix}c\\0_n\end{pmatrix} \\
+                         && x &\ge 0 \\
+    \end{alignat*}
+  \item From the matrix form of in \ref{sec:3a}, we can now derive the dual:
+    \begin{alignat*}{2}
+      \textbf{min.}\quad && y^Tb & \\
+      \textbf{s.t.}\quad && y^T\begin{pmatrix}I\\D\end{pmatrix} &\ge (0_{n(n-1)},1,0_{n-1}) \\
+                         && y &\ge 0 \\
+    \end{alignat*}
+    \item In the dual, we have $n^2+n$ variables.
+    The first $n^2$ each correspond to a (possible) arc in the network.
+    In the following, we will call these $y_E$.
+    The last $n$ variables each correspond the a node in the network, therefore we will call these $y_V$.
+
+    Assume that each variable $y_E$ can take either value 0 or 1, representing whether the corresponding arc (if it exists) is cut in the cut wich should be minimized or not. (If the arc does not exist, $y_E$ should also be 1).
+    Given this assumption, the objective function of the dual describes the sum of the weights (or capacities in the max flow problem) associated with the cut arcs.
+    Since the dual problem aims to minimize the objective function, this matches the min cut problem.
+
+    Now we show that the constraints of the dual problem do restrict the values of $y_E$ to describe a cut through the network, separating the source from the sink:
+    Before looking at the constraints, we introduce the interpretation of $y_V$.
+    We assume that each variable in $y_V$ is either 1 or 0, dependant on whether the corresponding node is in the sub-network which after the cut contains the source or the sink.
+    With this interpretation, we can look at each column in $A$ (which corresponds to a single constraint) and we find that each constraint has the following form:
+    \begin{equation}\label{eq:dual_const}
+      y_E^{(u,v)} - y_V^{(u)} + y_V^{(v)}
+    \end{equation}
+    where $y_E^{(u,v)}$ is the variable in $y_E$, corresponding to the arc between vertices $u,v\in V$ and $y_V^{(u)}$ being the variable in $y_V$, corresponding to vertex $u\in V$.
+
+    For seeing \eqref{eq:dual_const} form from $y^TA$, it helps to interpret the matrix $D$ as a matrix with a column for each (possible) arc and a row for each node.
+    Each column now has two non-zero entries, a $-1$ in the row corresponding to the node where the arc starts and a $1$ in the row corresponding to the node where it ends.
+    With this interpretation in mind it is easier to see that each column in $A$ has exactly 3 non-zero entries, corresponding to the variables in \eqref{eq:dual_const}.
+
+    With the given interpretations of $y_E$ and $y_V$, we can now interpret the constraints of the dual:
+    Each of the constraints is set to be $\ge 0$ (except for one, which we will talk about later).
+    What the constraints should ensure is that for an arc $(u,v)$ which is cut, the starting node $u$ is in the sub-network containing the source ($y_V^{(u)}=1$) and the ending node in in the sub-network containing the sink ($y_V^{(v)}=0$).
+    The constraint ensures that if an edge is not cut, $u$ cannot be in the sub-network containing the source, while $v$ is in the sub-network containing the sink. \\
+    The one constraint which is $\ge 1$ is the one corresponding to the non-existent arc between the sink and the source.
+    Since this arc does not exist, the corresponding $y_E^{(n,1)}=1$ and for the constraint to hold, $y_V^{(n)}=0$ and $y_V^{(1)}=1$.
+    Therefore this constraint ensures that the source and the sink are in their respective sub-networks and it implies that there are two distinct sub-networks.
+
+    All constraints together therefore ensure that $y_E$ is only 1 if the corresponding arc is either non-existent or is cut and that all paths between the source and the sink are cut.
+    Together with the objective function, the dual of the max flow problem therefore describes the min cut problem.
+\end{enumerate}
+\end{document}

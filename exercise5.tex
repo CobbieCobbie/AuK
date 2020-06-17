@@ -1,0 +1,467 @@
+\documentclass[a4paper,12pt,headsepline]{scrartcl}
+
+%\part{title}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption,subcaption}
+\usepackage[british]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{proof}
+\geometry{left=3.5cm, right=2cm, top=2.5cm, bottom=2cm}
+\usepackage{hyperref}
+%\usepackage[hyphens,obeyspaces,spaces]{url}
+\usepackage{fancybox}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{gensymb}
+\usepackage[linesnumbered,ruled,vlined,norelsize]{algorithm2e}
+%\usepackage[bookmarksnumbered,pdftitle={\titleDocument},hyperfootnotes=false]{hyperref} 
+\usepackage{color}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+\usepgfplotslibrary{fillbetween}
+
+%test
+%\usepackage[backend=bibtex]{biblatex}
+%\usepackage{filecontents}
+
+%\addbibresource{ref.bib}
+
+\restylefloat{figure}
+
+% Makros
+%\newenvironment{sketch}{\begin{proof}[Proof (Sketch)]}{\end{proof}}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{assumption}{Assumption}
+\newtheorem{lemma}{Lemma}
+%\newtheorem{remark}{Remark}
+%\newtheorem{definition}{Definition}
+%\newtheorem{corollary}{Corollary}
+\newcommand{\comment}[1]
+{
+  \begin{quotation}
+    \textcolor{blue}{\underline{Edit:} #1}
+  \end{quotation}
+}
+\newtheorem{aufgabe}{Exercise}
+\newcommand{\Ex}[2]
+{
+	\setcounter{section}{#2}
+	\section*{Übungsblatt #2 zu #1}
+}
+\newcommand{\TODO}[1]
+{
+  \begin{quotation}
+    \textcolor{red}{\underline{TODO:} #1}
+  \end{quotation}
+}
+% Zeichen 
+\newcommand{\OO}{\ensuremath{\mathcal{O}}}
+\newcommand{\ec}{\texttt{ec}}
+\newcommand{\NP}{\call{NP}}
+\newcommand{\call}[1]{\ensuremath{\mathcal{#1}}}
+
+% neue Kopfzeilen mit fancypaket
+\usepackage{fancyhdr} %Paket laden
+\pagestyle{fancy} %eigener Seitenstil
+\fancyhf{} %alle Kopf- und Fußzeilenfelder bereinigen
+\fancyhead[L]{Benjamin \c Coban \\ Christoph Jabs}
+\fancyhead[C]{Algorithmen und Komplexität \\ Blatt 5}
+\fancyhead[R]{3526251 \\ 5567177}
+\setlength{\headheight}{39pt}
+\renewcommand{\headrulewidth}{0.4pt} %obere Trennlinie
+%\fancyfoot[C]{\thepage} %Seitennummer
+%\renewcommand{\footrulewidth}{0.4pt} %untere Trennlinie
+
+\frenchspacing
+\makeindex
+
+% Pseudocode für Java
+\usepackage{listings}
+\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt, keywordstyle=\color{black}\bfseries, stringstyle=\ttfamily,showstringspaces=false,basicstyle=\footnotesize,captionpos=b}
+\lstset{language=java}
+
+% Disable single lines at the start of a paragraph (Schusterjungen)
+\clubpenalty = 10000
+% Disable single lines at the end of a paragraph (Hurenkinder)
+\widowpenalty = 10000
+\displaywidowpenalty = 10000
+
+\begin{document}
+
+\begin{aufgabe}
+\end{aufgabe}
+
+In the graphical illustrations, these colours mark the following:
+\begin{itemize}
+  \item \textcolor{blue}{Blue area}: infeasible due to constraint 1
+  \item \textcolor{red}{Red area}: infeasible due to constraint 2
+  \item \textcolor{orange}{Orange area}: infeasible due to constraint 3
+  \item \textcolor{green}{Green line}: line of solutions with value 0. The arrow marks the direction in which the value increases.
+\end{itemize}
+
+\begin{enumerate}[a)]
+  \item\mbox{}\\
+    \def\xm{6}
+    \def\ym{6}
+    \begin{center}
+      \begin{tikzpicture}
+        \begin{axis}[
+          xmin=-1, xmax=\xm,
+          ymin=-1, ymax=\ym,
+          axis lines=middle,
+          axis line style={->},
+          xlabel={$x_1$},
+          ylabel={$x_2$}
+          ]  
+          \path[name path=top] (axis cs:-1,\ym) -- (axis cs:\xm,\ym);
+          \path[name path=bottom] (axis cs:-1,-1) -- (axis cs:\xm,-1);
+          \path[name path=left] (axis cs:-1,-1) -- (axis cs:-1,\ym);
+          \path[name path=right] (axis cs:\xm,-1) -- (axis cs:\xm,\ym);
+
+          \addplot[blue, samples=100, domain=-1:\xm, name path=A] {-4*x+8}; 
+          \addplot[pattern=north east lines, pattern color=blue] fill between[of=A and top];
+          \addplot[red, samples=100, domain=-1:\xm, name path=B] {0.5*x+2}; 
+          \addplot[pattern=north east lines, pattern color=red] fill between[of=B and bottom];
+          \draw[orange, name path=C] (axis cs:1,-1) -- (axis cs:1,\ym);
+          \addplot[pattern=north east lines, pattern color=orange] fill between[of=C and left];
+
+          \addplot[green, domain=-1:\xm] {0.5*x};
+          \draw[green, thick, shorten <=3pt, ->] (axis cs:0,0) -- (axis cs:-1/2,1);
+        \end{axis}
+      \end{tikzpicture}
+    \end{center}
+
+    The problem has a finite set of feasible solutions.
+    We find the optimal solution by moving the green line in the direction of the arrow until it touches only one edge of the feasible set.
+    In this case we therefore have only one optimal solution.
+
+  \item\mbox{}\\
+    \begin{center}
+      \begin{tikzpicture}
+        \begin{axis}[
+          xmin=-1, xmax=\xm,
+          ymin=-1, ymax=\ym,
+          axis lines=middle,
+          axis line style={->},
+          xlabel={$x_1$},
+          ylabel={$x_2$}
+          ]  
+          \path[name path=top] (axis cs:-1,\ym) -- (axis cs:\xm,\ym);
+          \path[name path=bottom] (axis cs:-1,-1) -- (axis cs:\xm,-1);
+          \path[name path=left] (axis cs:-1,-1) -- (axis cs:-1,\ym);
+          \path[name path=right] (axis cs:\xm,-1) -- (axis cs:\xm,\ym);
+
+          \addplot[blue, samples=100, domain=-1:\xm, name path=A] {-4*x+8}; 
+          \addplot[pattern=north east lines, pattern color=blue] fill between[of=A and bottom];
+          \addplot[red, samples=100, domain=-1:\xm, name path=B] {0.5*x+2}; 
+          \addplot[pattern=north east lines, pattern color=red] fill between[of=B and top];
+          \draw[orange, name path=C] (axis cs:1,-1) -- (axis cs:1,\ym);
+          \addplot[pattern=north east lines, pattern color=orange] fill between[of=C and right];
+
+          \addplot[green, domain=-1:\xm] {0.5*x};
+          \draw[green, thick, shorten <=3pt, ->] (axis cs:0,0) -- (axis cs:-1/2,1);
+        \end{axis}
+      \end{tikzpicture}
+    \end{center}
+
+    There are no feasible points left over by the constraints, therefore the problem is infeasible.
+
+  \item\mbox{}\\
+    \begin{center}
+      \begin{tikzpicture}
+        \begin{axis}[
+          xmin=-1, xmax=\xm,
+          ymin=-1, ymax=\ym,
+          axis lines=middle,
+          axis line style={->},
+          xlabel={$x_1$},
+          ylabel={$x_2$}
+          ]  
+          \path[name path=top] (axis cs:-1,\ym) -- (axis cs:\xm,\ym);
+          \path[name path=bottom] (axis cs:-1,-1) -- (axis cs:\xm,-1);
+          \path[name path=left] (axis cs:-1,-1) -- (axis cs:-1,\ym);
+          \path[name path=right] (axis cs:\xm,-1) -- (axis cs:\xm,\ym);
+
+          \addplot[blue, samples=100, domain=-1:\xm, name path=A] {-4*x+8}; 
+          \addplot[pattern=north east lines, pattern color=blue] fill between[of=A and bottom];
+          \addplot[red, samples=100, domain=-1:\xm, name path=B] {0.5*x+2}; 
+          \addplot[pattern=north east lines, pattern color=red] fill between[of=B and bottom];
+          \draw[orange, name path=C] (axis cs:1,-1) -- (axis cs:1,\ym);
+          \addplot[pattern=north east lines, pattern color=orange] fill between[of=C and left];
+
+          \addplot[green, domain=-1:\xm] {0.5*x};
+          \draw[green, thick, shorten <=3pt, ->] (axis cs:0,0) -- (axis cs:1/2,-1);
+        \end{axis}
+      \end{tikzpicture}
+    \end{center}
+
+    To optimize the problem, we start with a line parallel to the green one, but intersecting the feasible region.
+    We then move this line in the direction of the green arrow until it is no longer intersecting the feasible region.
+    Since in this case, the second constraint is parallel to the objective function, this will be when the green line is equal to the red line.
+    In this case we have infinitely many optimal solutions.
+
+  \item\mbox{}\\
+    \begin{center}
+      \begin{tikzpicture}
+        \begin{axis}[
+          xmin=-1, xmax=\xm,
+          ymin=-1, ymax=\ym,
+          axis lines=middle,
+          axis line style={->},
+          xlabel={$x_1$},
+          ylabel={$x_2$}
+          ]  
+          \path[name path=top] (axis cs:-1,\ym) -- (axis cs:\xm,\ym);
+          \path[name path=bottom] (axis cs:-1,-1) -- (axis cs:\xm,-1);
+          \path[name path=left] (axis cs:-1,-1) -- (axis cs:-1,\ym);
+          \path[name path=right] (axis cs:\xm,-1) -- (axis cs:\xm,\ym);
+
+          \addplot[blue, samples=100, domain=-1:\xm, name path=A] {-4*x+8}; 
+          \addplot[pattern=north east lines, pattern color=blue] fill between[of=A and bottom];
+          \addplot[red, samples=100, domain=-1:\xm, name path=B] {0.5*x+2}; 
+          \addplot[pattern=north east lines, pattern color=red] fill between[of=B and bottom];
+          \draw[orange, name path=C] (axis cs:1,-1) -- (axis cs:1,\ym);
+          \addplot[pattern=north east lines, pattern color=orange] fill between[of=C and right];
+
+          \addplot[green, domain=-1:\xm] {0.5*x};
+          \draw[green, thick, shorten <=3pt, ->] (axis cs:0,0) -- (axis cs:-1/2,1);
+        \end{axis}
+      \end{tikzpicture}
+    \end{center}
+
+    In this case we can move the green line infinitely far, therefore the problem is unbounded.
+\end{enumerate}
+
+\newpage
+
+\begin{aufgabe}
+\end{aufgabe}
+
+\begin{enumerate}[a)]
+  \item\label{it:feasible} Since the initial basic solution is not feasible, we define the auxiliary linear problem:
+    \begin{equation*}
+      \begin{aligned}
+        \text{maximize}   & &      & &   & &      & & - & & x_0 &     &    \\
+        \text{subject to} & & x_1  & & - & & x_2  & & - & & x_0 & \le & -3 \\
+                          & & x_1  & & + & & x_2  & & - & & x_0 & \le & 7  \\
+                          & & x_1, & &   & & x_2, & &   & & x_0 & \ge & 0  \\
+      \end{aligned}
+    \end{equation*}
+
+    Now we can write the auxiliary problem in slackform and start solving it:
+
+    \begin{center}
+      \begin{tabular}{ccc}
+        Dictionary & Entering Variable & Leaving Variable \\
+        \hline
+        \hline
+      {$\begin{aligned}
+        z &= -x_0 \\
+        x_3 &= -3 -x_1 +x_2 +x_0 \\
+        x_4 &= 7 -x_1 -x_2 +x_0
+      \end{aligned}$} & $x_0$ & $x_3$ \\
+      \hline
+      {$\begin{aligned}
+        z &= -3 -x_1 +x_2 -x_3 \\
+        x_0 &= 3 +x_1 -x_2 +x_3 \\
+        x_4 &= 10 -2x_2 +x_3
+      \end{aligned}$} & $x_2$ & $x_0$ \\
+      \hline
+      {$\begin{aligned}
+        z &= -x_0 \\
+        x_2 &= 3 +x_1 +x_3 -x_0 \\
+        x_4 &= 4 -2x_1 -x_3 +2x_0 \\
+      \end{aligned}$} & 
+      \end{tabular}
+    \end{center}
+
+    This dictionary is now optimal with optimal value 0 and solution $x_0=0$, $x_1=0$, $x_2=3$, $x_3=0$, $x_4=4$.
+    With using the equalities from the constraints of the auxiliary problem, we get the following feasible dictionary for the original linear program:
+
+    \begin{align*}
+      z &= 2x_1 +3 +x_1 +x_3 = 3 +3x_1 +x_3 \\
+      x_2 &= 3 +x_1 +x_3 \\
+      x_4 &= 4 -2x_1 -x_3
+    \end{align*}
+
+  \item We now solve the linear program starting from the feasible dictionary computed in~\ref{it:feasible}.
+    \begin{center}
+      \begin{tabular}{ccc}
+        Dictionary & Entering Variable & Leaving Variable \\
+        \hline
+        \hline
+        {$\begin{aligned}
+          z &= 3 +3x_1 +x_3 \\
+          x_2 &= 3 +x_1 +x_3 \\
+          x_4 &= 4 -2x_1 -x_3
+        \end{aligned}$} & $x_1$ & $x_4$ \\
+        \hline
+        {$\begin{aligned}
+          z &= 9 -2x_3 -1.5x_4 \\
+          x_2 &= 5 -0.5x_4 \\
+          x_1 &= 2 -x_3 -0.5x_4
+        \end{aligned}$} & 
+    \end{tabular}
+  \end{center}
+
+  We now have the final dictionary and can determine the optimal solution to be of value 9 and stem from the value $x_1=2$ and $x_2=5$.
+\end{enumerate}
+
+\newpage
+
+\begin{aufgabe}
+\end{aufgabe}
+
+When looking at the constraints of the given linear program, we can insert the fact that $b=\vec 0$ and get $Ax\le \vec 0$.
+Since $x\ge 0$, we can conclude from this that the linear program is never infeasible, since independently of $A$, if $x=\vec 0$, the constraint is always fulfilled.
+From this we know that the problem either has an optimal solution or is unbounded.
+
+For gaining information about those two cases, we look at the dual of the problem.
+\begin{align*}
+  \text{minimize}   & & y^T & & b & &     & &     \\
+  \text{subject to} & & y^T & & A & & \ge & & c^T \\
+                    & &     & & y & & \ge & & 0
+\end{align*}
+Since we know that the primal cannot be infeasible, we know that the dual cannot be unbounded.
+When looking at the constraint $y^TA\ge c^T$, since we do not know anything about $A$ and $c$, we cannot say if it is infeasible or it has an optimal solution.
+Therefore there are two possibilities:
+\begin{enumerate}
+  \item The dual is infeasible and the primal therefore unbounded
+  \item The dual has an optimal solution.
+    From the objective function of the dual $y^Tb=y^T\vec 0=0$, we know that this optimal solution has the value 0.
+    The duality theorem tells us that the value of the optimal solution to the primal problem is equal to the optimal solution of the dual problem.
+    Therefore we know that $c^Tx^*=0$ and since $c$ is any arbitrary vector, this solution does only hold for $x=\vec 0$.
+\end{enumerate}
+
+\newpage
+
+\begin{aufgabe}
+\end{aufgabe}
+
+\begin{enumerate}[a)]
+  \item Consider the following dictionary:
+    \begin{align*}
+      z &= x_1 +2x_3 \\
+      x_2 &= 1 -x_1 -x_3
+    \end{align*}
+    When applying the simplex method with Bland's rule, $x_1$ will become basic in the next step and the dictionary will change to the following:
+    \begin{align*}
+      z &= 1 -x_2 +x_3 \\
+      x_1 &= 1 -x_2 -x_3
+    \end{align*}
+    Since $x_3$ does now have a positive coefficient in the objective function, it will become basic in the next step and $x_1$ will therefore become non-basic again.
+    \begin{align*}
+      z &= -x_1 -x_2 \\
+      x_3 &= 1 -x_1 -x_2
+    \end{align*}
+
+  \item For the leaving variable to become basic again in the next iteration, it would have to be the variable with the lowest index and a positive coefficient in the objective function.
+    Consider the following excerpt of a dictionary:
+    \begin{align*}
+      z &= \dots +cx_e +\dots \\
+      x_l &= b +\dots -ax_l +\dots
+    \end{align*}
+    Here $x_e$ shall be the entering and $x_l$ the leaving variable.
+    For $x_e$ to be entering, $c>0$ needs to be true and for $x_l$ to be leaving, $a,b>0$ needs to be true as well.
+
+    If we now express $x_e$ in terms of $x_l$, we get the following:
+    \[ x_3 = \frac ba +\dots -\frac 1a x_l +\dots \]
+    Plugging that into the objective function yields:
+    \[ z = \dots +c \left(\frac ba +\dots -\frac 1a x_l +\dots\right) \]
+    Since $x_l$ was basic in the last step, is cannot have been present in the objective function.
+    Therefore the final coefficient of $x_l$ in the objective function is $-\frac ca<0$.
+    This is why $x_l$ cannot become basic in the next step.
+\end{enumerate}
+
+\newpage
+\begin{aufgabe}
+\end{aufgabe}
+
+The following linear problem is to be solved with the Simplex algorithm, whereas the the Blands rule shall be applied. \textbf{The Blands Rule} states that in a degenerate case, the choice to pick lies in the smallest index.
+\begin{align*}
+    &\textbf{\text{maximize}} &10x_1 - 57x_2 - 9x_3 - 24x_4 & \\
+    &\textbf{\text{subject to}} & \frac{1}{2}x_1 -  \frac{11}{2} x_2 -  \frac{5}{2}x_3 +  9 x_4 & \leq  0 \\
+    & &\frac{1}{2}x_1 -\frac{3}{2}x_2-\frac{1}{2}x_3+x_4&\leq 0 \\
+    & &x_1 & \leq 1
+\end{align*}
+Where $x_i \geq 0$. In the following, $s_i$ and $z$ are slack variables regarding the constraints and the maximizing function, respectively.\\
+\begin{tabular}{c|c|c|c|c|c|c|c|c|}
+     & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $s_1$ & $s_2$ & $s_3$ & RHS  \\
+\hline   $s_1$ & $ \frac{1}{2}$& $-\frac{11}{2} $ &$-\frac{5}{2} $ & 9 & 1&0 & 0 & 0\\
+\hline   $s_2$ &$\frac{1}{2} $ &$ -\frac{3}{2} $ & $-\frac{1}{2} $& 1 & 0&1 &0 & 0\\
+\hline   $s_3$ & 1 & 0 & 0 & 0 & 0&0 &1 & 1\\
+\hline   \hline$z$ & -10 & 57 & 9 & 24 & 0 & 0  & 0 & 0\\
+\hline 
+\end{tabular}\\     
+It is clear that the row of choice is the first one, due to $-10x_1$ in the slack equation for $z$. The min test results in a tie between $s_1$ and $s_2$. Blands Rule states that in this case the choice lies in the index, in this case in $s_1$. Therefore, the following table is derived by basic operations:\\
+\begin{tabular}{c|c|c|c|c|c|c|c|c|}
+     & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $s_1$ & $s_2$ & $s_3$ & RHS  \\
+\hline   $x_1$ & $ \frac{1}{2}$& $-\frac{11}{2} $ &$-\frac{5}{2} $ & 9 & 1&0 & 0 & 0\\
+\hline $s_2$ & 0 & 4 & 4 & -8 &-1 &1 & 0 & 0\\
+\hline $s_3$ & 0 & $11$ &5 &-18 &-2 & 0&1 & 1\\
+\hline  \hline $z$ & 0 & -53 & -41 & -156 & 20 & 0 & 0 & 0\\
+\hline 
+\end{tabular}\\     
+The minimal coeffizient in $z$ is the one belonging to $x_4$. This time $s_3$ wins the min test.\\
+\begin{tabular}{c|c|c|c|c|c|c|c|c|}
+     & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $s_1$ & $s_2$ & $s_3$ & RHS  \\
+\hline   $x_1$ & 1& 0 &0 & 0 & 0&0 & 1 & 1\\
+\hline $s_2$ & 0 & 8 & -16 & 0 &1 & 9 & 4 & 4\\
+\hline $x_4$ & 0 & $11$ &5 &-18 &-2 & 0&1 & 1\\
+\hline \hline $z$ & 0 & 445 & 253 & 0 & -112 & 0 & 0 & 0\\
+\hline 
+\end{tabular}\\ 
+The row of choice is the one with the -112 entry in $z$, $s_1$. The min test is won by $x_4$.\\
+\begin{tabular}{c|c|c|c|c|c|c|c|c|}
+     & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $s_1$ & $s_2$ & $s_3$ & RHS  \\
+\hline   $x_1$ & 1& 0 &0 & 0 & 0&0 & 1 & 1\\
+\hline $s_2$ & 0 & 27 & -27 & -18 &0 & 18 & 9 & 9\\
+\hline $s_1$ & 0 & $11$ &5 &-18 &-2 & 0 & 1 & 1\\
+\hline \hline $z$ & 0 & 171 & 27 & -1008 & 0 & 0 & 56 & 56\\
+\hline 
+\end{tabular}\\
+The row of choice belongs to $x_4$, the min test is won by $s_2$.\\
+\begin{tabular}{c|c|c|c|c|c|c|c|c|}
+     & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $s_1$ & $s_2$ & $s_3$ & RHS  \\
+\hline   $x_1$ & 1& 0 &0 & 0 & 0&0 & 1 & 1\\
+\hline $x_4$ & 0 & 27 & -27 & -18 &0 & 18 & 9 & 9\\
+\hline $s_1$ & 0 & 16 &-32 &0 & 2 & 18 & 8 & 8\\
+\hline \hline $z$ & 0 & 1341 & -1539 & 0 & 0 & 1008 & 448 & 448\\
+\hline 
+\end{tabular}\\
+The row of choice belongs to $x_3$, the min test is won by $x_4$:\\
+\begin{tabular}{c|c|c|c|c|c|c|c|c|}
+     & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $s_1$ & $s_2$ & $s_3$ & RHS  \\
+\hline   $x_1$ & 1& 0 &0 & 0 & 0&0 & 1 & 1\\
+\hline $x_3$ & 0 & 27 & -27 & -18 &0 & 18 & 9 & 9\\
+\hline $s_1$ & 0 & -432 &0 &576 & -54 & -90 & -72 & -72\\
+\hline \hline $z$ & 0 & 198 & 0 & -1026 & 0 & 18 & 65 & 65\\
+\hline 
+\end{tabular}\\
+The row of choice belongs to $x_4$, the min test winner is $x_3$:\\
+\begin{tabular}{c|c|c|c|c|c|c|c|c|}
+     & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $s_1$ & $s_2$ & $s_3$ & RHS  \\
+\hline   $x_1$ & 1& 0 &0 & 0 & 0&0 & 1 & 1\\
+\hline $x_4$ & 0 & 27 & -27 & -18 &0 & 18 & 9 & 9\\
+\hline $s_1$ & 0 & -432 &0 &576 & -54 & -90 & -72 & -72\\
+\hline \hline $z$ & 0 & 198 & 0 & -1026 & 0 & 18 & 65 & 65\\
+\hline 
+\end{tabular}\\
+
+\newpage
+\begin{aufgabe}
+\end{aufgabe}
+
+
+
+\newpage
+\begin{aufgabe}
+\end{aufgabe}
+
+\end{document}
