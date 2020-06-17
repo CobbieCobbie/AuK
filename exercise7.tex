@@ -153,5 +153,20 @@ Note that this is not the only optimal solution, consider this second solution i
 \newpage
 \begin{aufgabe}
 \end{aufgabe}
-
+The given LP $P$ is to solve with the Primal-dual Simplex. As an initial solution for $D$, $y$ equals the zero vector. The restricted instances of $P$ and $R$ will be solved with an LP solver.\footnote{\hyperlink{https://online-optimizer.appspot.com/?model=builtin:default.mod}{https://online-optimizer.appspot.com/?model=builtin:default.mod}}. First, the dual is computed:
+\begin{align*}D:\\
+\textbf{\text{max}} & &2&y_1 + &&y_2 &\\
+\textbf{\text{s.t.}} & &&y_1 - &&y_2 & \leq 2\\
+& &-2&y_1 + &3&y_2 & \leq 1
+\end{align*}
+Next, define $I$:
+\begin{align*}
+I = I(y*) = \left\{ j\mid 1 \leq i,j \leq 2, \sum a_{ij}y*_i =c_j \right\} 
+\end{align*}
+If we have feasible solutions $x$ for $P$ and $y$ for $D$ where $x_j=0 \forall j\in \overline{I}(y)$, then the solutions are optimal. Next, formulate $R$:
+\begin{align*}R:\\
+\textbf{\text{min}} & &&s_1 + &&s_2 &&&\\
+\textbf{\text{s.t.}} & &&x_1 - &&2x_2 &&+s_1 &= 2\\
+& &-&x_1 + &3&x_2 && + s_2 & = 1
+\end{align*}
 \end{document}
