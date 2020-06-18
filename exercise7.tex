@@ -111,7 +111,7 @@
 \newpage
 \begin{aufgabe}
 \end{aufgabe}
-The $L_1$ metrics between two points out of $\mathbb{R}^2$ is defined as:
+The Manhattan metrics between two points out of $\mathbb{R}^2$ is defined as:
 \begin{align*}
 d(p_i,p_j) = |x_i - x_j| + |y_i - y_j|
 \end{align*}
@@ -148,8 +148,17 @@ Note that this is not the only optimal solution, consider this second solution i
 		\caption*{Alternative solution}
 	\end{subfigure}
 \end{figure}
-\item 
+\item The following LP formulates the MMDPS. 
+\begin{align*}
+	\textbf{\text{min}} & && && &\\
+	\textbf{\text{s.t.}} & &&x_i - &&x_l^i &\geq 0&\\
+	                     & &&x_r^i - &&x_i &\geq 0&\\
+	                     & &&y_t^i - &&y_i &\geq 0&\\
+	                     & &&y_i - && y_b^i &\geq 0 &\\
+	                     &&& x_i,y_i &&& \geq 0& \forall i\in \{1..n\}
+\end{align*}
 \end{enumerate}
+
 \newpage
 \begin{aufgabe}
 \end{aufgabe}
