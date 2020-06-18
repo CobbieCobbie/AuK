@@ -150,13 +150,20 @@ Note that this is not the only optimal solution, consider this second solution i
 \end{figure}
 \item The following LP formulates the MMDPS. 
 \begin{align*}
-	\textbf{\text{min}} & && && &\\
-	\textbf{\text{s.t.}} & &&x_i - &&x_l^i &\geq 0&\\
-	                     & &&x_r^i - &&x_i &\geq 0&\\
-	                     & &&y_t^i - &&y_i &\geq 0&\\
-	                     & &&y_i - && y_b^i &\geq 0 &\\
-	                     &&& x_i,y_i &&& \geq 0& \forall i\in \{1..n\}
+	\textbf{\text{min}} & z && && & &
 \end{align*}
+\begin{align}
+	\textbf{\text{s.t.}} & &&x_i - &&x_l^i&&&& &\geq 0&\\
+	                     & &&x_r^i - &&x_i&&&& &\geq 0&\\
+	                     & &&y_t^i - &&y_i&&&& &\geq 0&\\
+	                     & &&y_i - && y_b^i &&&& &\geq 0 &\\
+	                     & && x_i - &&x_j + &&y_i - &&y_j &\leq z&\\
+	                     & & -&x_i + &&x_j + &&y_i - &&y_j &\leq z&\\
+	                     & && x_i - &&x_j + &-&y_i + &&y_j &\leq z&\\
+	                     & & -&x_i + &&x_j + &-&y_i + &&y_j &\leq z&\\
+	                     &&&&&&&&&&&\forall i,j\in \{1,...,n\}, i\neq j
+\end{align}
+Constraints 1 to 4 state that the points shall be in the rectangles. Constraints 5 to 8 formulate the Manhattan distance by resolving a non-linear inequality with two linear inequalitites. $z$ will be the diameter to minimize.
 \end{enumerate}
 
 \newpage
