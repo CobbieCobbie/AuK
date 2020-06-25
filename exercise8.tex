@@ -1,0 +1,164 @@
+\documentclass[a4paper,12pt,headsepline]{scrartcl}
+
+%\part{title}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption,subcaption}
+\usepackage[british]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{proof}
+\geometry{left=3.5cm, right=2cm, top=2.5cm, bottom=2cm}
+\usepackage{hyperref}
+%\usepackage[hyphens,obeyspaces,spaces]{url}
+\usepackage{fancybox}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage{gensymb}
+\usepackage[linesnumbered,ruled,vlined,norelsize]{algorithm2e}
+%\usepackage[bookmarksnumbered,pdftitle={\titleDocument},hyperfootnotes=false]{hyperref} 
+\usepackage{color}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{marvosym}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+\usepgfplotslibrary{fillbetween}
+%%%
+
+% Always forgetting the figure parameters for precise graphical inclusions -.-
+
+%\begin{figure}[H]
+	%\centering
+	%\begin{subfigure}{0.4\textwidth}
+		%\centering
+		%\includegraphics[width=0.34\linewidth,page=6]{includegraphics/L-%t-shape_candidates}
+%		\caption{Empty $T$-face}\label{im:empty_T}	
+%	\end{subfigure}
+%%%
+%test
+%\usepackage[backend=bibtex]{biblatex}
+%\usepackage{filecontents}
+
+%\addbibresource{ref.bib}
+
+\restylefloat{figure}
+
+% Makros
+%\newenvironment{sketch}{\begin{proof}[Proof (Sketch)]}{\end{proof}}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{assumption}{Assumption}
+\newtheorem{lemma}{Lemma}
+%\newtheorem{remark}{Remark}
+%\newtheorem{definition}{Definition}
+%\newtheorem{corollary}{Corollary}
+\newcommand{\comment}[1]
+{
+  \begin{quotation}
+    \textcolor{blue}{\underline{Edit:} #1}
+  \end{quotation}
+}
+\newtheorem{aufgabe}{Exercise}
+\newcommand{\Ex}[2]
+{
+	\setcounter{section}{#2}
+	\section*{Übungsblatt #2 zu #1}
+}
+\newcommand{\TODO}[1]
+{
+  \begin{quotation}
+    \textcolor{red}{\underline{TODO:} #1}
+  \end{quotation}
+}
+% Zeichen 
+\newcommand{\OO}{\ensuremath{\mathcal{O}}}
+\newcommand{\ec}{\texttt{ec}}
+\newcommand{\NP}{\call{NP}}
+\newcommand{\call}[1]{\ensuremath{\mathcal{#1}}}
+
+% neue Kopfzeilen mit fancypaket
+\usepackage{fancyhdr} %Paket laden
+\pagestyle{fancy} %eigener Seitenstil
+\fancyhf{} %alle Kopf- und Fußzeilenfelder bereinigen
+\fancyhead[L]{Benjamin \c Coban \\ Christoph Jabs}
+\fancyhead[C]{Algorithmen und Komplexität \\ Blatt 8}
+\fancyhead[R]{3526251 \\ 5567177}
+\setlength{\headheight}{39pt}
+\renewcommand{\headrulewidth}{0.4pt} %obere Trennlinie
+%\fancyfoot[C]{\thepage} %Seitennummer
+%\renewcommand{\footrulewidth}{0.4pt} %untere Trennlinie
+
+\frenchspacing
+\makeindex
+
+% Pseudocode für Java
+\usepackage{listings}
+\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt, keywordstyle=\color{black}\bfseries, stringstyle=\ttfamily,showstringspaces=false,basicstyle=\footnotesize,captionpos=b}
+\lstset{language=java}
+
+% Disable single lines at the start of a paragraph (Schusterjungen)
+\clubpenalty = 10000
+% Disable single lines at the end of a paragraph (Hurenkinder)
+
+\widowpenalty = 10000
+\displaywidowpenalty = 10000
+\begin{document}
+\begin{aufgabe}ILP
+\end{aufgabe}
+\newpage
+\begin{aufgabe}Planar graph properties
+\end{aufgabe}
+Following Eulers Theorem:
+\begin{align*}
+n + f = m + 2
+\end{align*}
+A maximal planar graph has exactly $3n-6$ edges, meaning:
+\begin{align*}
+n + f = 3n-6 + 2   \Rightarrow f = 2n-4
+\end{align*}
+\begin{enumerate}[a)]
+	\item It is to proof that for a planar embedded graph $G$ with $n$ vertices and $m$ edges without any triangles the following holds:
+	\begin{align*}
+		m \leq 2n-4
+	\end{align*}
+	\begin{proof}
+		Consider a maximal planar graph $G'$ with $n$ vertices. Then, it holds that $G'$ has exactly $m' = 3n-6$ edges and $f' = 2n-4$ faces. Since $G'$ is maximal planar, every face is a triangle. A planar graph $G$ without any triangles can be constructed by removing an edge between two adjacent faces. Then, two triangles become one quadrangle. Since $G'$ has exactly $2n-4$ edges, there are $n-2$ edge removals to obtain a planar graph without any triangles. Therefore $G$ can hold at most $m \leq m' - (v-2) = 2n -4$ edges.
+	\end{proof}
+	\item It is to examine what an upper bound of edge counts might be when a planar embedded graph $G'$ ain't got any cycles of size three or four. The following holds:
+	\begin{align*}
+		m \leq \frac{5}{3}n - \frac{10}{3}
+	\end{align*}
+	\begin{proof}
+		Again, a maximal planar graph $G'$ with $n$ vertices holds exactly $m' = 3n-6$ edges and $f' = 2n-4$ faces. From $G'$, the removal of two neighbouring edges of three adjacent triangles will result in a residual graph $G$ with cycles of size at least 5. So, in count, for every three triangles two edges will be removed. Therefore it holds, that $m \leq m' - \frac{2\cdot (2n-4)}{3} = 3n-6 - (\frac{4}{3}n - \frac{8}{3}) = \frac{5}{3}n - \frac{10}{3}$.
+	\end{proof}
+\end{enumerate}
+\newpage
+\begin{aufgabe}Planarity
+\end{aufgabe}
+\begin{enumerate}[b)]
+	\item
+	\item 
+	\item 
+	\item
+	\item
+\end{enumerate}
+\newpage
+\begin{aufgabe}1-planar graphs
+\end{aufgabe}
+\begin{enumerate}
+	\item A maximal planar graph $G$ has exactly $3n-6$ edges. Every further edge insertion with respect to the 1-planarity constraint will result exactly one crossing. 
+	\item 
+	\begin{proof}
+		A triangulated planar graph is maximal planar. Suppose not. Then, there would be at least one edge $e (v_1,v_3)$ which could be inserted without violating the planarity. Then, $v_1,v_3$ are at least part of a circle of size $4$. Then the graph is not triangulated. Following Eulers Theorem:
+		\begin{align*}
+		n + f = m + 2
+		\end{align*}
+		A maximal planar graph has exactly $3n-6$ edges, meaning:
+		\begin{align*}
+		n + f = 3n-6 + 2   \Rightarrow f = 2n-4
+		\end{align*}
+	\end{proof}
+\end{enumerate}
+\end{document}
