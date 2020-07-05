@@ -443,8 +443,53 @@
 \newpage
 \begin{aufgabe}Separator for Weighted Trees
 \end{aufgabe}
-\begin{enumerate}[a)]
-  \item
-  \item
-\end{enumerate}
+A $\left(1,\frac{1}{2}\right)$ Seperator for a weighted tree $T$ with weight function $c: V\to R_{\geq 0}$ will consist of one vertex, separating the tree of the CC of the parent and the CC of every child with its respective weight sums.\\
+\begin{algorithm}[H]
+	\SetAlgoLined
+	\KwIn{Weighted Tree $T$ with weight function $c$}
+	\KwResult{Set of all $\left(1,\frac{1}{2}\right)$ separator vertices}
+	\caption{Algorithm to calculate a Separator of a given Weighted Tree}
+	\texttt{weight\_sum} $\gets \sum_{v\in V} c(v)$\\
+	\texttt{Candidates } $\gets V$\\
+	\texttt{SubtreeWeightMap }$ \gets \emptyset$\\
+	\texttt{r} $\gets root(T)$\tcc{If $T$ was not a rooted tree, make it to one by picking a random root }
+	\texttt{Helper($r$)}\\
+	\Return{Candidates}
+\end{algorithm}
+
+\begin{algorithm}[H]
+	\KwIn{vertex $v$ of a tree $T$ with weight function $c$}
+	\KwResult{Mapping of all vertices of the tree starting at $v$ as key and the weight sum of the respective subtree as value}
+	\If{$v$ Leaf}{
+		\texttt{SubtreeWeightMap.append($v,c(v)$)}\\
+		\If{$c(v) < \frac{weight\_sum}{2}$}{
+		\texttt{Candidates} $\gets$ \texttt{Candidates}$\setminus \{v\}$\\
+		\tcc{If the weight is less than half of the total sum, then the leaf is not a separator}
+	}    
+    }
+	\Else{
+		\For{$w.$children of $v$}{Helper($w$)\\
+		\tcc{recursively compute all the subresults necessary}}
+		\texttt{SubtreeWeightMap.append$\left(\left(v,c(v) + \sum_{w\in \text{children of } v} SubtreeWeightMap(w)  \right)\right)$ }
+		\\ \tcc{The subtree weight sums are stored in the map starting at root $v$}
+		\If{$\left(SubtreeWeightMap[v]< \frac{weight\_sum}{2}\right)$ or $\left(\exists w.\text{ Children of }v\text{ and }\texttt{SubtreeWeightMap}[w]>\frac{weight\_sum}{2}\right)$}{
+		\texttt{Candidates} $\gets$ \texttt{Candidates}$\setminus \{v\}$
+		\\\tcc{If the whole subtree with $v$ as root weighs less than half of the total sum, then the CC resulting of $G$ without the subtree violates the constraint. Similarily for the children subtree weight sum case.}
+		}	
+	}
+
+	\caption{Helper($v$)}
+\end{algorithm}
+\subsection*{Correctness}
+A separating vertex $v$ will always separate a tree in multiple CC:
+\begin{itemize}
+	\item $G[V - V(Subtree(v))]$ as the residual graph without the subtree rooted at $v$
+	\item $V[Subtree(w)]$ for every child $w$ of $v$
+\end{itemize}
+This is a result from the fact that a tree is per definition 1-connected, without any cycles and has exactly $n-1$ edges. The algorithm 2 will at first compute the total sum \texttt{weight\_sum} of the tree for comparison reasons. A tree is either rooted or free. If the given tree was free, then it can be altered to a rooted tree $T'$ by setting an arbitrary vertex to the root. At first, all the vertices are candidates to be a $\left(1,\frac{1}{2}\right)$ separator. With help of a recursive Helper function starting at root, a mapping is constructed where every vertex serving as key will have the total weight of its subtree as value.\\
+In the recursion, the terminating premisse is that the current vertex is a leaf. Then, the subtree is the vertex with its weight. Else, the helper function is called recursively for every child of $v$ since the subresults are necessary in order to decide whether or not $v$ is a separator.\\ 
+If the total weight of the subtree of $v$ is smaller than half of the total weight of $T$, then $v$ cannot be a separator since the remaining CC is greater than half of the total weight. Similarily, if a subtree of a child of $v$ is in total sum greater than half of the total weight sum of $T$, $v$ is not a seperator and therefore removed from the set of candidates.\\
+The algorithm will terminate sind the trees are finite and every leaf will be a terminating case of the recursion tree. In every step of the recursion, every subresult necessary for the parental decision making is computed. Finally, it will be decided whether or not the root of $T$ (or $T'$) is a separator. Therefore, the algorithm is correct.
+\subsection*{Runtime}
+The computation of the total weight sum of $T$ is in $\mathcal{O}(n)$. The recursion works bottom up for every tree (leaves first) and every vertex is visited exactly once, since $T$ is a tree. The amount of arithmetic operations, logical conditions and decisions are constant in every recursion step, except for the comparison whether or not a child subtree violates the constraint (Helper function, line 9). In the amortized analysis, there will be $\mathcal{O}(n)$ childs for a given tree $T$ to compare during the recursion. Therefore, the total runtime is in $\mathcal{O}(n)$.
 \end{document}
